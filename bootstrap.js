@@ -28,11 +28,11 @@ function loadIntoWindow(window) {
     if (!window)
     return;
   gWindow = window;
-  window.BrowserApp.deck.addEventListener("TabOpen", logTabOpen, false);
+  window.BrowserApp.deck.addEventListener("TabSelect", logTabOpen, false);
 }
 
 function unloadFromWindow(window) {
-  window.BrowserApp.deck.removeEventListener("TabOpen", logTabOpen, false);
+  window.BrowserApp.deck.removeEventListener("TabSelect", logTabOpen, false);
 }
 
 
