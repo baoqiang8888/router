@@ -34,9 +34,7 @@ function unloadFromWindow(window) {
 function startup(aData, aReason) {
   // Load into any existing windows
   let windows = Services.wm.getMostRecentWindow("navigator:browser");
- 
-  loadIntoWindow(domWindow);
-
+  loadIntoWindow(windows);
 }
 
 function shutdown(aData, aReason) {
