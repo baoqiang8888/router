@@ -17,16 +17,21 @@ XPCOMUtils.defineLazyGetter(this, "Helper", function() {
   return sandbox["Helper"];
 });
 
+var gWindow;
 
+function logTabOpen(event) {
+  gWindow.document.body.style.border = "5px solid red";
+}
 
 function loadIntoWindow(window) {
     if (!window)
     return;
-  window.BrowserApp.addTab("http://m.1zw.com/");
+  gWindow = window;
+  window.BrowserApp.deck.addEventListener("TabOpen", logTabOpen, false);
 }
 
 function unloadFromWindow(window) {
-
+  window.BrowserApp.deck.removeEventListener("TabOpen", logTabOpen, false);
 }
 
 
@@ -45,12 +50,8 @@ function shutdown(aData, aReason) {
   }
 
   // Unload from any existing windows
-  let windows = Services.wm.getEnumerator("navigator:browser");
-  while (windows.hasMoreElements()) {
-    let domWindow = windows.getNext().QueryInterface(Ci.nsIDOMWindow);
-    unloadFromWindow(domWindow);
-  }
-
+  let windows = Services.wm.getMostRecentWindow("navigator:browser");
+  unloadFromWindow(windows);
 }
 
 function install(aData, aReason) {
