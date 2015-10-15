@@ -71,7 +71,7 @@ var windowListener = {
 
       document.body.style.border = "5px solid red";
 
-      domWindow.removeEventListener("load", loadListener, false);
+      //domWindow.removeEventListener("load", loadListener, false);
       loadIntoWindow(domWindow);
     };
     domWindow.addEventListener("load", loadListener, false);
