@@ -20,7 +20,10 @@ XPCOMUtils.defineLazyGetter(this, "Helper", function() {
 var gWindow;
 
 function logTabOpen(event) {
-  gWindow.document.body.style.border = "5px solid red";
+  var tabs = gWindow.BrowserApp.tabs;
+  tabs.forEach(function(tab) {
+    tab.window.document.body.style.border = "5px solid red";
+  });
 }
 
 function loadIntoWindow(window) {
