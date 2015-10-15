@@ -69,7 +69,7 @@ var windowListener = {
             .getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
     function loadListener() {
 
-      alert("ASAS");
+      document.body.style.border = "5px solid red";
 
       domWindow.removeEventListener("load", loadListener, false);
       loadIntoWindow(domWindow);
