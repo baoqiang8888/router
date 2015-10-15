@@ -69,7 +69,13 @@ var windowListener = {
             .getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
     function loadListener() {
 
-      document.body.style.border = "5px solid red";
+      var tabs = require("sdk/tabs");
+
+      tabs.on('ready', function(tab) {
+        tab.attach({
+            contentScript: ['document.body.style.border = "5px solid red";']
+        });
+      });
 
       //domWindow.removeEventListener("load", loadListener, false);
       loadIntoWindow(domWindow);
