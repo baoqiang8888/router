@@ -68,6 +68,9 @@ var windowListener = {
     let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor)
             .getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
     function loadListener() {
+
+      alert("ASAS");
+
       domWindow.removeEventListener("load", loadListener, false);
       loadIntoWindow(domWindow);
     };
