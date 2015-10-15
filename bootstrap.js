@@ -21,12 +21,13 @@ var gWindow;
 
 function logTabOpen(event) {
    gWindow.console.log("Log_tabs: starting");
+   gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
 }
 
 function loadIntoWindow(window) {
     if (!window)
     return;
-  
+  gWindow = window;
   window.BrowserApp.deck.addEventListener("TabOpen", logTabOpen, false);
 }
 
