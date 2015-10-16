@@ -24,12 +24,9 @@ function logTabOpen(event) {
    //gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
   var tabs = gWindow.BrowserApp.tabs;
   tabs.forEach(function(tab) {
-    tab.window.document.onreadystatechange = function () {
-      if (tab.window.document.readyState == "complete") {
-          gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
-          tab.window.document.body.style.border = "5px solid red";
-      }
-    }    
+    tab.window.onload = function(){
+      gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
+    }   
   });
 }
 
