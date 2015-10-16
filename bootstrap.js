@@ -11,7 +11,7 @@ var menuId;
 function myFunction(aEvent){
     if(!aEvent)
       return;
-    let browser = aEvent.target; 
+    let browser = aEvent.originalTarget;
     browser.addEventListener("load", function () {
       browser.contentDocument.body.innerHTML = "<div>hello world</div>";
     }, true);
@@ -41,7 +41,7 @@ function loadIntoWindow(window) {
   browserApp = window.BrowserApp;
   //browserApp.deck.addEventListener("TabOpen", myFunction, false);
  
-  BrowserApp.deck.addEventListener("load", onPageLoad, false);
+  browserApp.deck.addEventListener("load", onPageLoad, false);
   
 
   //menuId = window.NativeWindow.menu.add("View Source", null, function() {
@@ -54,7 +54,8 @@ function unloadFromWindow(window) {
     return;
   //window.NativeWindow.menu.remove(menuId);
   browserApp = window.BrowserApp;
-  BrowserApp.deck.removeEventListener("load", onPageLoad, false);
+  browserApp.deck.removeEventListener("load", onPageLoad, false);
+
 }
  
 var windowListener = {
