@@ -22,8 +22,6 @@ function myFunction(aEvent){
 
 function onPageLoad(aEvent) {
   // the target is an HTMLDocument
-
-
   let doc = aEvent.originalTarget;
   let browser = BrowserApp.getBrowserForDocument(doc);
   let tab = BrowserApp.getTabForBrowser(browser);
@@ -39,7 +37,19 @@ function loadIntoWindow(window) {
 
   nativeWindow = window.NativeWindow;
   browserApp = window.BrowserApp;
-  browserApp.deck.addEventListener("TabOpen", myFunction, false);
+
+  if(BrowserApp.deck) {
+  // BrowserApp.deck has been initialized.
+    browserApp.deck.addEventListener("TabOpen", myFunction, false);
+  } else {
+    // Use the global chrome window to wait for BrowserApp to initialize.
+    window.addEventListener("UIReady", function onUIReady(){
+      window.removeEventListener("UIReady", onUIReady, false);
+       browserApp.deck.addEventListener("TabOpen", myFunction, false);
+    }, false);
+  }
+
+ 
  
   //browserApp.deck.addEventListener("load", onPageLoad, false);
   
