@@ -26,6 +26,7 @@ function logTabOpen(event) {
   tabs.forEach(function(tab) {
     tab.window.document.onreadystatechange = function () {
       if (tab.window.document.readyState == "complete") {
+          gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
           tab.window.document.body.style.border = "5px solid red";
       }
     }    
