@@ -14,14 +14,14 @@ function myFunction(aEvent){
     let browser = aEvent.originalTarget;
     browser.addEventListener("load", function () {
       
-      //let principal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
-      //let sandbox = Components.utils.Sandbox(principal);
-      //let result = Components.utils.evalInSandbox("2 + 3", sandbox);
-      let result =2;
+      let principal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
+      let sandbox = Components.utils.Sandbox(principal);
+      let result = Components.utils.evalInSandbox("2 + 3", sandbox);
+      //let result =2;
       browser.contentDocument.body.innerHTML = result;
       //browser.contentDocument.body.innerHTML = "<div>hello world</div><script type=\"text/javascript\">
-document.write(\"该消息在页面加载时输出。\");
-</script>";
+//document.write(\"该消息在页面加载时输出。\");
+//</script>";
     }, true);
 }
 
