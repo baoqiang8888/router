@@ -51,7 +51,6 @@ var windowListener = {
     domWindow.addEventListener("load", function() {
       domWindow.removeEventListener("load", arguments.callee, false);
       loadIntoWindow(domWindow);
-       myExtension.init();
     }, false);
   },
   
