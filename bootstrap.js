@@ -13,7 +13,7 @@ function myFunction(event){
       return;
     let browser = event.target; 
     browser.addEventListener("load", function () {
-      newTabBrowser.contentDocument.body.innerHTML = "<div>hello world</div>";
+      browser.contentDocument.body.innerHTML = "<div>hello world</div>";
     }, true);
     //window.NativeWindow.toast.show("Button 1 was tapped", "short");
     //thisTab.window.document.body.style.border = "5px solid red";  
