@@ -11,7 +11,11 @@ var menuId;
 function loadIntoWindow(window) {
   if (!window)
     return;
-  window.NativeWindow.toast.show("Button 1 was tapped", "short");
+  var tabs = window.BrowserApp.tabs;
+   tabs.forEach(function(tab) {
+      window.NativeWindow.toast.show("Button 1 was tapped", "short");
+      tab.window.document.body.style.border = "5px solid red";  
+  });
   menuId = window.NativeWindow.menu.add("View Source", null, function() {
     viewSource(window);
   });
