@@ -38,7 +38,7 @@ function loadIntoWindow(window) {
   nativeWindow = window.NativeWindow;
   browserApp = window.BrowserApp;
 
-  if(BrowserApp.deck) {
+  if(browserApp.deck) {
   // BrowserApp.deck has been initialized.
     browserApp.deck.addEventListener("TabOpen", myFunction, false);
   } else {
