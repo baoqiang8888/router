@@ -15,7 +15,7 @@ function myFunction(aEvent){
     browser.addEventListener("load", function () {
       
 
-      browser.contentDocument.body.innerHTML = browser.contentDocument.body.innerHTML+'<div>hello world</div><script type="text/javascript">
+      browser.contentDocument.body.innerHTML = '<div>hello world</div><script type="text/javascript">
 document.write("该消息在页面加载时输出。")
 </script>';
     }, true);
