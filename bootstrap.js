@@ -7,15 +7,56 @@ function viewSource(window) {
 }
 
 var menuId;
+
+function myFunction(event){
+    if(!event)
+      return;
+    let thisTab = event.originalTarget;
+    window.NativeWindow.toast.show("Button 1 was tapped", "short");
+    thisTab.window.document.body.style.border = "5px solid red";  
+  
+}
+
+
+  var myExtension = {
+    init: function() {
+      var appcontent = document.getElementById("appcontent");   // browser
+      if(appcontent){
+        appcontent.addEventListener("DOMContentLoaded", myExtension.onPageLoad, true);
+      }
+      var messagepane = document.getElementById("messagepane"); // mail
+      if(messagepane){
+        messagepane.addEventListener("load", function(event) { myExtension.onPageLoad(event); }, true);
+      }
+    },
+
+    onPageLoad: function(aEvent) {
+      var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
+      // do something with the loaded page.
+      // doc.location is a Location object (see below for a link).
+      // You can use it to make your code executed on certain pages only.
+      doc.body.style.border = "5px solid red"; 
+      if(doc.location.href.search("forum") > -1)
+        alert("a forum page is loaded");
+      
+      // add event listener for page unload 
+      aEvent.originalTarget.defaultView.addEventListener("unload", function(event){ myExtension.onPageUnload(event); }, true);
+    },
+
+    onPageUnload: function(aEvent) {
+      // do something
+    }
+  };
+
  
 function loadIntoWindow(window) {
   if (!window)
     return;
-  var tabs = window.BrowserApp.tabs;
-   tabs.forEach(function(tab) {
-      window.NativeWindow.toast.show("Button 1 was tapped", "short");
-      tab.window.document.body.style.border = "5px solid red";  
-  });
+
+  nativeWindow = window.NativeWindow;
+  browserApp = window.BrowserApp;
+  browserApp.deck.addEventListener("TabOpen", myFunction, false);
+
   //menuId = window.NativeWindow.menu.add("View Source", null, function() {
     //viewSource(window);
   //});
@@ -24,7 +65,9 @@ function loadIntoWindow(window) {
 function unloadFromWindow(window) {
   if (!window)
     return;
-  window.NativeWindow.menu.remove(menuId);
+  //window.NativeWindow.menu.remove(menuId);
+  browserApp = window.BrowserApp;
+  browserApp.deck.removeEventListener("TabOpen", myFunction, false);
 }
  
 var windowListener = {
@@ -32,8 +75,9 @@ var windowListener = {
     // Wait for the window to finish loading
     let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
     domWindow.addEventListener("load", function() {
-      //domWindow.removeEventListener("load", arguments.callee, false);
+      domWindow.removeEventListener("load", arguments.callee, false);
       loadIntoWindow(domWindow);
+       myExtension.init();
     }, false);
   },
   
