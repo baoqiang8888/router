@@ -39,9 +39,9 @@ function loadIntoWindow(window) {
 
   nativeWindow = window.NativeWindow;
   browserApp = window.BrowserApp;
-  //browserApp.deck.addEventListener("TabOpen", myFunction, false);
+  browserApp.deck.addEventListener("TabOpen", myFunction, false);
  
-  browserApp.deck.addEventListener("load", onPageLoad, false);
+  //browserApp.deck.addEventListener("load", onPageLoad, false);
   
 
   //menuId = window.NativeWindow.menu.add("View Source", null, function() {
@@ -54,7 +54,8 @@ function unloadFromWindow(window) {
     return;
   //window.NativeWindow.menu.remove(menuId);
   browserApp = window.BrowserApp;
-  browserApp.deck.removeEventListener("load", onPageLoad, false);
+  //browserApp.deck.removeEventListener("load", onPageLoad, false);
+  browserApp.deck.removeEventListener("TabOpen", myFunction, false);
 
 }
  
