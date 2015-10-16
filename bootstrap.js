@@ -11,42 +11,16 @@ var menuId;
 function myFunction(event){
     if(!event)
       return;
-    let thisTab = event.originalTarget;
-    window.NativeWindow.toast.show("Button 1 was tapped", "short");
-    thisTab.window.document.body.style.border = "5px solid red";  
+    let browser = event.target; 
+    browser.addEventListener("load", function () {
+      newTabBrowser.contentDocument.body.innerHTML = "<div>hello world</div>";
+    }, true);
+    //window.NativeWindow.toast.show("Button 1 was tapped", "short");
+    //thisTab.window.document.body.style.border = "5px solid red";  
   
 }
 
 
-  var myExtension = {
-    init: function() {
-      var appcontent = document.getElementById("appcontent");   // browser
-      if(appcontent){
-        appcontent.addEventListener("DOMContentLoaded", myExtension.onPageLoad, true);
-      }
-      var messagepane = document.getElementById("messagepane"); // mail
-      if(messagepane){
-        messagepane.addEventListener("load", function(event) { myExtension.onPageLoad(event); }, true);
-      }
-    },
-
-    onPageLoad: function(aEvent) {
-      var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
-      // do something with the loaded page.
-      // doc.location is a Location object (see below for a link).
-      // You can use it to make your code executed on certain pages only.
-      doc.body.style.border = "5px solid red"; 
-      if(doc.location.href.search("forum") > -1)
-        alert("a forum page is loaded");
-      
-      // add event listener for page unload 
-      aEvent.originalTarget.defaultView.addEventListener("unload", function(event){ myExtension.onPageUnload(event); }, true);
-    },
-
-    onPageUnload: function(aEvent) {
-      // do something
-    }
-  };
 
  
 function loadIntoWindow(window) {
