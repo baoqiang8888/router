@@ -14,8 +14,8 @@ function myFunction(aEvent){
     let browser = aEvent.originalTarget;
     browser.addEventListener("load", function () {
       
-      let principal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
-      let sandbox = Components.utils.Sandbox(principal);
+      //let principal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
+      //let sandbox = Components.utils.Sandbox(principal);
       //let result = Components.utils.evalInSandbox("2 + 3", sandbox);
       let result =2;
       browser.contentDocument.body.innerHTML = result;
