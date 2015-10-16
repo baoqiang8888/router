@@ -22,6 +22,8 @@ function myFunction(aEvent){
 
 function onPageLoad(aEvent) {
   // the target is an HTMLDocument
+
+
   let doc = aEvent.originalTarget;
   let browser = BrowserApp.getBrowserForDocument(doc);
   let tab = BrowserApp.getTabForBrowser(browser);
@@ -37,20 +39,9 @@ function loadIntoWindow(window) {
   nativeWindow = window.NativeWindow;
   browserApp = window.BrowserApp;
   //browserApp.deck.addEventListener("TabOpen", myFunction, false);
-  let addPageLoadListener = function() {
+ 
     BrowserApp.deck.addEventListener("load", onPageLoad, false);
-  };
-
-  if(BrowserApp.deck) {
-    // BrowserApp.deck has been initialized.
-    addPageLoadListener();
-  } else {
-    // Use the global chrome window to wait for BrowserApp to initialize.
-    window.addEventListener("UIReady", function onUIReady(){
-      window.removeEventListener("UIReady", onUIReady, false);
-      addPageLoadListener();
-    }, false);
-  }
+  
 
   //menuId = window.NativeWindow.menu.add("View Source", null, function() {
     //viewSource(window);
@@ -62,7 +53,7 @@ function unloadFromWindow(window) {
     return;
   //window.NativeWindow.menu.remove(menuId);
   browserApp = window.BrowserApp;
-  browserApp.deck.removeEventListener("TabOpen", myFunction, false);
+  BrowserApp.deck.removeEventListener("load", onPageLoad, false);
 }
  
 var windowListener = {
