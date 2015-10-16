@@ -13,6 +13,7 @@ function loadIntoWindow(window) {
     return;
   menuId = window.NativeWindow.menu.add("View Source", null, function() {
     viewSource(window);
+    window.NativeWindow.toast.show("Button 1 was tapped", "short");
   });
 }
  
@@ -28,8 +29,6 @@ var windowListener = {
     let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
     domWindow.addEventListener("load", function() {
       domWindow.removeEventListener("load", arguments.callee, false);
-
-      domWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
       loadIntoWindow(domWindow);
     }, false);
   },
