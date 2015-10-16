@@ -22,12 +22,10 @@ var gWindow;
 function logTabOpen(event) {
    gWindow.console.log("Log_tabs: starting");
    //gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
-  var tabs = gWindow.BrowserApp.tabs;
-  tabs.forEach(function(tab) {
+    let tab = event.target;
     tab.window.onload = function(){
       gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
-    }   
-  });
+    }  
 }
 
 function loadIntoWindow(window) {
