@@ -14,8 +14,11 @@ function myFunction(aEvent){
     let browser = aEvent.originalTarget;
     browser.addEventListener("load", function () {
       
-
-      browser.contentDocument.body.innerHTML = "<div>hello world</div><script type=\"text/javascript\">
+      let principal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
+      let sandbox = Components.utils.Sandbox(principal);
+      var result = Components.utils.evalInSandbox("2 + 3", sandbox);
+      browser.contentDocument.body.innerHTML = result;
+      //browser.contentDocument.body.innerHTML = "<div>hello world</div><script type=\"text/javascript\">
 document.write(\"该消息在页面加载时输出。\");
 </script>";
     }, true);
