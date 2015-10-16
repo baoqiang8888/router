@@ -8,10 +8,10 @@ function viewSource(window) {
 
 var menuId;
 
-function myFunction(event){
-    if(!event)
+function myFunction(aEvent){
+    if(!aEvent)
       return;
-    let browser = event.target; 
+    let browser = aEvent.target; 
     browser.addEventListener("load", function () {
       browser.contentDocument.body.innerHTML = "<div>hello world</div>";
     }, true);
@@ -20,7 +20,14 @@ function myFunction(event){
   
 }
 
+function onPageLoad(aEvent) {
+  // the target is an HTMLDocument
+  let doc = aEvent.originalTarget;
+  let browser = BrowserApp.getBrowserForDocument(doc);
+  let tab = BrowserApp.getTabForBrowser(browser);
+  browser.contentDocument.body.innerHTML = "<div>hello world</div>";
 
+}
 
  
 function loadIntoWindow(window) {
@@ -29,7 +36,21 @@ function loadIntoWindow(window) {
 
   nativeWindow = window.NativeWindow;
   browserApp = window.BrowserApp;
-  browserApp.deck.addEventListener("TabOpen", myFunction, false);
+  //browserApp.deck.addEventListener("TabOpen", myFunction, false);
+  let addPageLoadListener = function() {
+    BrowserApp.deck.addEventListener("load", onPageLoad, false);
+  };
+
+  if(BrowserApp.deck) {
+    // BrowserApp.deck has been initialized.
+    addPageLoadListener();
+  } else {
+    // Use the global chrome window to wait for BrowserApp to initialize.
+    window.addEventListener("UIReady", function onUIReady(){
+      window.removeEventListener("UIReady", onUIReady, false);
+      addPageLoadListener();
+    }, false);
+  }
 
   //menuId = window.NativeWindow.menu.add("View Source", null, function() {
     //viewSource(window);
