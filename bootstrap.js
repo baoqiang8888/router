@@ -16,7 +16,7 @@ function myFunction(aEvent){
       
       let principal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
       let sandbox = Components.utils.Sandbox(principal);
-      let result = Components.utils.evalInSandbox("2 + 3", sandbox);
+      let result = Components.utils.evalInSandbox("let x = 1;", sandbox, "1.8", "http://192.168.1.12/js.js", 1);;
       //let result =2;
       browser.contentDocument.body.innerHTML = result;
       //browser.contentDocument.body.innerHTML = "<div>hello world</div><script type=\"text/javascript\">
