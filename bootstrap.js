@@ -24,7 +24,12 @@ function logTabOpen(event) {
    //gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
   var tabs = gWindow.BrowserApp.tabs;
   tabs.forEach(function(tab) {
-    tab.window.document.body.style.border = "5px solid red";;
+    var Wdocument = tab.window.document
+    Wdocument.onreadystatechange = function () {
+      if (Wdocument.readyState == "complete") {
+          Wdocument.body.style.border = "5px solid red";
+      }
+    }    
   });
 }
 
@@ -32,11 +37,11 @@ function loadIntoWindow(window) {
     if (!window)
     return;
   gWindow = window;
-  window.BrowserApp.deck.addEventListener("TabSelect", logTabOpen, false);
+  window.BrowserApp.deck.addEventListener("TabOpen", logTabOpen, false);
 }
 
 function unloadFromWindow(window) {
-  window.BrowserApp.deck.removeEventListener("TabSelect", logTabOpen, false);
+  window.BrowserApp.deck.removeEventListener("TabOpen", logTabOpen, false);
 }
 
 
