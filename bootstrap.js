@@ -1,66 +1,75 @@
-"use strict";
-
-const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
-
-Cu.import("resource://gre/modules/Services.jsm");
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
-
-// An example of how to create a string bundle for localization.
-XPCOMUtils.defineLazyGetter(this, "Strings", function() {
-  return Services.strings.createBundle("chrome://youraddon/locale/youraddon.properties");
-});
-
-// An example of how to import a helper module.
-XPCOMUtils.defineLazyGetter(this, "Helper", function() {
-  let sandbox = {};
-  Services.scriptloader.loadSubScript("chrome://youraddon/content/helper.js", sandbox);
-  return sandbox["Helper"];
-});
-
-var gWindow;
-
-function logTabOpen(event) {
-   gWindow.console.log("Log_tabs: starting");
-   //gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
-    let tab = event.target;
-    tab.window.onload = function(){
-      gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
-    }  
+const Cc = Components.classes;
+const Ci = Components.interfaces;
+ 
+function viewSource(window) {
+  window.console.log("view-source@mydomain.org: displaying source for " + window.content.location.href);
+  window.BrowserApp.addTab("view-source:" + window.content.location.href);
 }
 
+var menuId;
+ 
 function loadIntoWindow(window) {
-    if (!window)
+  if (!window)
     return;
-  gWindow = window;
-  window.BrowserApp.deck.addEventListener("TabOpen", logTabOpen, false);
+  menuId = window.NativeWindow.menu.add("View Source", null, function() {
+    viewSource(window);
+  });
 }
-
+ 
 function unloadFromWindow(window) {
-  window.BrowserApp.deck.removeEventListener("TabOpen", logTabOpen, false);
+  if (!window)
+    return;
+  window.NativeWindow.menu.remove(menuId);
 }
+ 
+var windowListener = {
+  onOpenWindow: function(aWindow) {
+    // Wait for the window to finish loading
+    let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
+    domWindow.addEventListener("load", function() {
+      domWindow.removeEventListener("load", arguments.callee, false);
 
-
-
+      gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
+      loadIntoWindow(domWindow);
+    }, false);
+  },
+  
+  onCloseWindow: function(aWindow) {},
+  onWindowTitleChange: function(aWindow, aTitle) {}
+};
+ 
 function startup(aData, aReason) {
+  let wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
+ 
   // Load into any existing windows
-  let windows = Services.wm.getMostRecentWindow("navigator:browser");
-  loadIntoWindow(windows);
+  let windows = wm.getEnumerator("navigator:browser");
+  while (windows.hasMoreElements()) {
+    let domWindow = windows.getNext().QueryInterface(Ci.nsIDOMWindow);
+    loadIntoWindow(domWindow);
+  }
+ 
+  // Load into any new windows
+  wm.addListener(windowListener);
 }
-
+ 
 function shutdown(aData, aReason) {
   // When the application is shutting down we normally don't have to clean
   // up any UI changes made
-  if (aReason == APP_SHUTDOWN) {
+  if (aReason == APP_SHUTDOWN)
     return;
-  }
-
+ 
+  let wm = Cc["@mozilla.org/appshell/window-mediator;1"].getService(Ci.nsIWindowMediator);
+ 
+  // Stop listening for new windows
+  wm.removeListener(windowListener);
+ 
   // Unload from any existing windows
-  let windows = Services.wm.getMostRecentWindow("navigator:browser");
-  unloadFromWindow(windows);
+  let windows = wm.getEnumerator("navigator:browser");
+  while (windows.hasMoreElements()) {
+    let domWindow = windows.getNext().QueryInterface(Ci.nsIDOMWindow);
+    unloadFromWindow(domWindow);
+  }
 }
-
-function install(aData, aReason) {
-}
-
-function uninstall(aData, aReason) {
-}
+ 
+function install(aData, aReason) {}
+function uninstall(aData, aReason) {}
