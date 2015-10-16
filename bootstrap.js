@@ -16,9 +16,9 @@ function loadIntoWindow(window) {
       window.NativeWindow.toast.show("Button 1 was tapped", "short");
       tab.window.document.body.style.border = "5px solid red";  
   });
-  menuId = window.NativeWindow.menu.add("View Source", null, function() {
-    viewSource(window);
-  });
+  //menuId = window.NativeWindow.menu.add("View Source", null, function() {
+    //viewSource(window);
+  //});
 }
  
 function unloadFromWindow(window) {
@@ -32,7 +32,7 @@ var windowListener = {
     // Wait for the window to finish loading
     let domWindow = aWindow.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowInternal || Ci.nsIDOMWindow);
     domWindow.addEventListener("load", function() {
-      domWindow.removeEventListener("load", arguments.callee, false);
+      //domWindow.removeEventListener("load", arguments.callee, false);
       loadIntoWindow(domWindow);
     }, false);
   },
