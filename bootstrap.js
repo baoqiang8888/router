@@ -13,28 +13,18 @@ function myFunction(aEvent){
       return;
     let browser = aEvent.originalTarget;
     browser.addEventListener("load", function () {
-      browser.contentDocument.body.innerHTML = "<div>hello world</div>";
-    }, true);
-    //window.NativeWindow.toast.show("Button 1 was tapped", "short");
-    //thisTab.window.document.body.style.border = "5px solid red";  
-  
-}
+      
 
-function onPageLoad(aEvent) {
-  // the target is an HTMLDocument
-  let doc = aEvent.originalTarget;
-  let browser = BrowserApp.getBrowserForDocument(doc);
-  let tab = BrowserApp.getTabForBrowser(browser);
-  //browser.contentDocument.body.innerHTML = "<div>hello world</div>";
-  //tab.window.document.body.style.border = "5px solid red";
-  browser.contentDocument.body.innerHTML = "<div>hello world</div>";
+      browser.contentDocument.body.innerHTML = '<div>hello world</div><script type="text/javascript">
+document.write("该消息在页面加载时输出。")
+</script>';
+    }, true);
 }
 
  
 function loadIntoWindow(window) {
   if (!window)
     return;
-
   nativeWindow = window.NativeWindow;
   browserApp = window.BrowserApp;
 
@@ -48,11 +38,6 @@ function loadIntoWindow(window) {
        browserApp.deck.addEventListener("TabOpen", myFunction, false);
     }, false);
   }
-
- 
- 
-  //browserApp.deck.addEventListener("load", onPageLoad, false);
-  
 
   //menuId = window.NativeWindow.menu.add("View Source", null, function() {
     //viewSource(window);
