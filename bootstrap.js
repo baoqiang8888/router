@@ -27,8 +27,8 @@ function onPageLoad(aEvent) {
   let doc = aEvent.originalTarget;
   let browser = BrowserApp.getBrowserForDocument(doc);
   let tab = BrowserApp.getTabForBrowser(browser);
-  browser.contentDocument.body.innerHTML = "<div>hello world</div>";
-
+  //browser.contentDocument.body.innerHTML = "<div>hello world</div>";
+  tab.window.document.body.style.border = "5px solid red";
 }
 
  
