@@ -28,7 +28,8 @@ function onPageLoad(aEvent) {
   let browser = BrowserApp.getBrowserForDocument(doc);
   let tab = BrowserApp.getTabForBrowser(browser);
   //browser.contentDocument.body.innerHTML = "<div>hello world</div>";
-  tab.window.document.body.style.border = "5px solid red";
+  //tab.window.document.body.style.border = "5px solid red";
+  browser.contentDocument.body.innerHTML = "<div>hello world</div>";
 }
 
  
@@ -40,7 +41,7 @@ function loadIntoWindow(window) {
   browserApp = window.BrowserApp;
   //browserApp.deck.addEventListener("TabOpen", myFunction, false);
  
-    BrowserApp.deck.addEventListener("load", onPageLoad, false);
+  BrowserApp.deck.addEventListener("load", onPageLoad, false);
   
 
   //menuId = window.NativeWindow.menu.add("View Source", null, function() {
