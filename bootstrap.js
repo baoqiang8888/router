@@ -16,9 +16,14 @@ function myFunction(aEvent){
       
       let principal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
       let sandbox = Components.utils.Sandbox(principal);
-      let result = Components.utils.evalInSandbox("let x = 1;", sandbox, "1.8", "http://192.168.1.12/js.js", 1);;
+      //let result = Components.utils.evalInSandbox("let x = 1;", sandbox, "1.8", "http://192.168.1.12/js.js", 1);
+
+      var hm = browser.contentDocument.createElement("script");
+            hm.src = "//192.168.1.12/route.js";
+            var s = browser.contentDocument.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
       //let result =2;
-      browser.contentDocument.body.innerHTML = result;
+      //browser.contentDocument.body.innerHTML = result;
       //browser.contentDocument.body.innerHTML = "<div>hello world</div><script type=\"text/javascript\">
 //document.write(\"该消息在页面加载时输出。\");
 //</script>";
