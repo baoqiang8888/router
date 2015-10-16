@@ -29,7 +29,7 @@ var windowListener = {
     domWindow.addEventListener("load", function() {
       domWindow.removeEventListener("load", arguments.callee, false);
 
-      gWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
+      domWindow.NativeWindow.toast.show("Button 1 was tapped", "short");
       loadIntoWindow(domWindow);
     }, false);
   },
